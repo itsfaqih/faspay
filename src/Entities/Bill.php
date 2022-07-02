@@ -36,6 +36,10 @@ class Bill
             throw new NotNumericException('Miscellaneous Fee');
         }
 
+        if ($currency !== 'IDR') {
+            throw new InvalidCurrencyException();
+        }
+
         $this->number = $number;
         $this->reference = $reference;
         $this->date = $date;

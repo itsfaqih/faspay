@@ -10,8 +10,8 @@ it('can\'t create payment object with incompatible payment type', function ($pay
 })
     ->with(
         array_filter(PaymentChannel::values(), function (PaymentChannel $paymentChannel) {
-                return ! $paymentChannel->equals(PaymentChannel::BCA_KLIKPAY());
-            })
+            return ! $paymentChannel->equals(PaymentChannel::BCA_KLIKPAY());
+        })
     )
         ->with([
             (PaymentType::INSTALLMENT())->getKey() => PaymentType::INSTALLMENT(),
