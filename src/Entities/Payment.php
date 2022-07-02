@@ -16,7 +16,7 @@ class Payment
         $isInstallmentOrMixed = in_array($paymentType, [PaymentType::INSTALLMENT(), PaymentType::MIXED()]);
         $channelForInstallmentOrMixed = PaymentChannel::BCA_KLIKPAY();
 
-        if ($isInstallmentOrMixed && $paymentChannel !== $channelForInstallmentOrMixed) {
+        if ($isInstallmentOrMixed && ! $paymentChannel->equals($channelForInstallmentOrMixed)) {
             throw new IncompatiblePaymentMethodException();
         }
 
