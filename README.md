@@ -4,8 +4,6 @@
 [![Tests](https://github.com/itsfaqih/faspay/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/itsfaqih/faspay/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/itsfaqih/faspay.svg?style=flat-square)](https://packagist.org/packages/itsfaqih/faspay)
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
-
 ## Installation
 
 You can install the package via composer:
