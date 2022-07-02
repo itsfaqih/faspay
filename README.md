@@ -18,6 +18,7 @@ composer require itsfaqih/faspay
 
 ```php
 use ItsFaqih\Faspay\Client;
+use ItsFaqih\Faspay\Entities\User;
 use ItsFaqih\Faspay\Enums\Environment;
 
 $user = new User('bot98765', 'p@ssw0rd', '98765', 'FASPAY');
@@ -29,7 +30,7 @@ $faspayClient = new Client(
 
 $response = $faspayClient->paymentChannelInquiry();
 
-var_dump($response->response);
+var_dump($response);
 ```
 
 ## Testing
