@@ -1,21 +1,23 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "itsfaqih/faspay",
+    "description": "Unofficial Faspay SDK",
     "keywords": [
-        ":vendor_name",
-        ":package_slug"
+        "itsfaqih",
+        "faspay"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/itsfaqih/faspay",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Muhammad Faqih Muntashir",
+            "email": "itsfaqih@ruine.dev",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.0"
+        "php": "^7.0",
+        "guzzlehttp/guzzle": "^7.4",
+        "myclabs/php-enum": "^1.8"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -24,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src"
+            "ItsFaqih\\Faspay\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "ItsFaqih\\Faspay\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -38,7 +40,10 @@
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
