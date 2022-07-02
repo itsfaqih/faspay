@@ -23,10 +23,7 @@ use ItsFaqih\Faspay\Enums\Environment;
 
 $user = new User('bot98765', 'p@ssw0rd', '98765', 'FASPAY');
 
-$faspayClient = new Client(
-		$user,
-		Environment::DEVELOPMENT()
-);
+$faspayClient = new Client($user, Environment::DEVELOPMENT());
 
 $response = $faspayClient->paymentChannelInquiry();
 
