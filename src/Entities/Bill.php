@@ -18,7 +18,7 @@ class Bill
     public $miscFee;
     public $total;
 
-    public function __construct(string $number, \DateTime $date, \DateTime $expired, string $description, int|string $total, int|string|null $gross = null, int|string|null $miscFee = null, string|null $reference = null, string $currency = 'IDR')
+    public function __construct(string $number, \DateTime $date, \DateTime $expired, string $description, string $total, ?string $gross = null, ?string $miscFee = null, ?string $reference = null, string $currency = 'IDR')
     {
         if ($expired <= $date) {
             throw new InvalidExpiredDateException();
@@ -89,7 +89,7 @@ class Bill
         return $this->currency = $currency;
     }
 
-    public function setGross(int|string $gross): int|string
+    public function setGross(string $gross): string
     {
         if (! is_numeric($gross)) {
             throw new NotNumericException('Gross');
@@ -98,7 +98,7 @@ class Bill
         return $this->gross = $gross;
     }
 
-    public function setMiscFee(int|string $miscFee): int|string
+    public function setMiscFee(string $miscFee): string
     {
         if (! is_numeric($miscFee)) {
             throw new NotNumericException('Miscellaneous Fee');
@@ -107,7 +107,7 @@ class Bill
         return $this->miscFee = $miscFee;
     }
 
-    public function setTotal(int|string $total): int|string
+    public function setTotal(string $total): string
     {
         if (! is_numeric($total)) {
             throw new NotNumericException('Total');

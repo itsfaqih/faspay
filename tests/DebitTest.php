@@ -30,7 +30,7 @@ beforeEach(function () {
     );
 });
 
-it('can do payment channels inquiry', function () {
+it('can do payment channel inquiry', function () {
     $mock = new MockHandler([
         new Response(200, [
             'Content-Type' => 'application/json',
@@ -90,10 +90,10 @@ it('can do payment channels inquiry', function () {
 });
 
 it('can do post data transaction with full settlement as payment type', function ($paymentChannel) {
-    $bill = new Bill('TRX-123', new \DateTime(), (new \DateTime())->modify('+1 day'), 'Red Shoes with special price', 250_000);
+    $bill = new Bill('TRX-123', new \DateTime(), (new \DateTime())->modify('+1 day'), 'Red Shoes with special price', '250000');
     $payment = new Payment($paymentChannel, PaymentType::FULL_SETTLEMENT());
     $customer = new Customer('001', 'John Smith', '08123456789', 'john.smith@example.com');
-    $item = new BillItem('Red Shoes', 1, 250_000);
+    $item = new BillItem('Red Shoes', 1, '250000');
 
     $mock = new MockHandler([
         new Response(200, [
@@ -147,7 +147,7 @@ it('can do post data transaction with full settlement as payment type', function
         ->toBe(1);
 
     expect($response->billItems[0]->price)
-        ->toBe(250_000);
+        ->toBe('250000');
 
     expect($response->billItems[0]->paymentType)
         ->toBeInstanceOf(PaymentType::class);

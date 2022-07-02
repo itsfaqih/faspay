@@ -14,7 +14,7 @@ class BillItem
     public $tenor;
     public $merchantId;
 
-    public function __construct(string $name, int $quantity, int|string $price, ?PaymentType $paymentType = null, ?string $tenor = '00', ?string $merchantId = null)
+    public function __construct(string $name, int $quantity, string $price, ?PaymentType $paymentType = null, ?string $tenor = '00', ?string $merchantId = null)
     {
         if (! is_numeric($price)) {
             throw new NotNumericException('Price');
