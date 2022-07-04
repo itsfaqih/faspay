@@ -7,9 +7,11 @@ use ItsFaqih\Faspay\Entities\Customer;
 use ItsFaqih\Faspay\Entities\Payment;
 use ItsFaqih\Faspay\Entities\User;
 use ItsFaqih\Faspay\Enums\Environment;
+use ItsFaqih\Faspay\Requests\CancelTransactionRequest;
 use ItsFaqih\Faspay\Requests\InquiryPaymentStatusRequest;
 use ItsFaqih\Faspay\Requests\PaymentChannelInquiryRequest;
 use ItsFaqih\Faspay\Requests\PostDataTransactionRequest;
+use ItsFaqih\Faspay\Responses\CancelTransactionResponse;
 use ItsFaqih\Faspay\Responses\InquiryPaymentStatusResponse;
 use ItsFaqih\Faspay\Responses\PaymentChannelInquiryResponse;
 use ItsFaqih\Faspay\Responses\PostDataTransactionResponse;
@@ -63,6 +65,15 @@ class Client
     public function inquiryPaymentStatus(string $trxId, string $billNo): InquiryPaymentStatusResponse
     {
         $request = new InquiryPaymentStatusRequest($this->user, $this->environment, $trxId, $billNo);
+
+        $request->setConfig($this->guzzleConfig);
+
+        return $request->handle();
+    }
+
+    public function cancelTransaction(string $trxId, string $billNo, string $reason): CancelTransactionResponse
+    {
+        $request = new CancelTransactionRequest($this->user, $this->environment, $trxId, $billNo, $reason);
 
         $request->setConfig($this->guzzleConfig);
 
