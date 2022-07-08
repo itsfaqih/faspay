@@ -13,6 +13,7 @@ composer require itsfaqih/faspay
 ```
 
 ## Usage
+Configure the credentials and the client.
 
 ```php
 use ItsFaqih\Faspay\Client;
@@ -22,10 +23,45 @@ use ItsFaqih\Faspay\Enums\Environment;
 $user = new User('bot98765', 'p@ssw0rd', '98765', 'FASPAY');
 
 $faspayClient = new Client($user, Environment::DEVELOPMENT());
+```
 
-$response = $faspayClient->paymentChannelInquiry();
+### Payment Channel Inquiry
+```php
+$faspayClient->paymentChannelInquiry();
+```
 
-var_dump($response);
+### Post Data Transaction
+```php
+use ItsFaqih\Faspay\Entities\Bill;
+use ItsFaqih\Faspay\Entities\BillItem;
+use ItsFaqih\Faspay\Entities\Customer;
+use ItsFaqih\Faspay\Entities\Payment;
+use ItsFaqih\Faspay\Enums\PaymentChannel;
+use ItsFaqih\Faspay\Enums\PaymentType;
+
+$bill = new Bill('TRX-123', new \DateTime(), (new \DateTime())->modify('+1 day'), 'Red Shoes with special price', '250000');
+$payment = new Payment(PaymentChannel::LINK_AJA(), PaymentType::FULL_SETTLEMENT());
+$customer = new Customer('001', 'John Smith', '08123456789', 'john.smith@example.com');
+$item = new BillItem('Red Shoes', 1, '250000');
+
+$faspayClient->postDataTransaction($bill, $payment, $customer, [$item]);
+```
+
+### Inquiry Payment Status
+```php
+$trxId = '9876530200004184';
+$billNo = 'TRX-123';
+
+$faspayClient->inquiryPaymentStatus($trxId, $billNo);
+```
+
+### Cancel Transaction
+```php
+$trxId = '9876530200004184';
+$billNo = 'TRX-123';
+$reason = 'Wrong order';
+
+$faspayClient->cancelTransaction($trxId, $billNo, $reason);
 ```
 
 ## Testing
