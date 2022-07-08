@@ -2,21 +2,30 @@
 
 namespace ItsFaqih\Faspay\Entities;
 
+use ItsFaqih\Faspay\Contracts\Entity;
 use ItsFaqih\Faspay\Exceptions\Bill\InvalidCurrencyException;
 use ItsFaqih\Faspay\Exceptions\Bill\InvalidExpiredDateException;
 use ItsFaqih\Faspay\Exceptions\General\NotNumericException;
 
-class Bill
+class Bill extends Entity
 {
-    public $number;
-    public $reference;
-    public $date;
-    public $expired;
-    public $description;
-    public $currency;
-    public $gross;
-    public $miscFee;
-    public $total;
+    public string $number;
+    public ?string $reference;
+    public \DateTime $date;
+    public \DateTime $expired;
+    public string $description;
+    public string $currency;
+    public ?string $gross;
+    public ?string $miscFee;
+    public string $total;
+
+    public static array $requiredKeys = [
+        'number',
+        'date',
+        'expired',
+        'description',
+        'total',
+    ];
 
     public function __construct(string $number, \DateTime $date, \DateTime $expired, string $description, string $total, ?string $gross = null, ?string $miscFee = null, ?string $reference = null, string $currency = 'IDR')
     {
@@ -49,6 +58,23 @@ class Bill
         $this->gross = $gross;
         $this->miscFee = $miscFee;
         $this->total = $total;
+    }
+
+    public static function fromArray(array $data): Bill
+    {
+        self::validateArrayData($data);
+
+        return new static(
+            $data['number'],
+            $data['date'],
+            $data['expired'],
+            $data['description'],
+            $data['total'],
+            $data['gross'] ?? null,
+            $data['miscFee'] ?? null,
+            $data['reference'] ?? null,
+            $data['currency'] ?? 'IDR'
+        );
     }
 
     public function setNumber(string $number): string

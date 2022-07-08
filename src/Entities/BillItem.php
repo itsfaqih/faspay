@@ -2,17 +2,24 @@
 
 namespace ItsFaqih\Faspay\Entities;
 
+use ItsFaqih\Faspay\Contracts\Entity;
 use ItsFaqih\Faspay\Enums\PaymentType;
 use ItsFaqih\Faspay\Exceptions\General\NotNumericException;
 
-class BillItem
+class BillItem extends Entity
 {
-    public $name;
-    public $quantity;
-    public $price;
-    public $paymentType;
-    public $tenor;
-    public $merchantId;
+    public string $name;
+    public int $quantity;
+    public string $price;
+    public ?PaymentType $paymentType;
+    public ?string $tenor;
+    public ?string $merchantId;
+
+    public static array $requiredKeys = [
+        'name',
+        'quantity',
+        'price',
+    ];
 
     public function __construct(string $name, int $quantity, string $price, ?PaymentType $paymentType = null, ?string $tenor = '00', ?string $merchantId = null)
     {
@@ -30,6 +37,20 @@ class BillItem
         if (empty($this->paymentType)) {
             $this->paymentType = PaymentType::FULL_SETTLEMENT();
         }
+    }
+
+    public static function fromArray(array $data): BillItem
+    {
+        self::validateArrayData($data);
+
+        return new static(
+            $data['name'],
+            $data['quantity'],
+            $data['price'],
+            $data['paymentType'] ?? null,
+            $data['tenor'] ?? '00',
+            $data['merchantId'] ?? null
+        );
     }
 
     public function toArray(): array

@@ -2,12 +2,21 @@
 
 namespace ItsFaqih\Faspay\Entities;
 
-class Customer
+use ItsFaqih\Faspay\Contracts\Entity;
+
+class Customer extends Entity
 {
-    public $number;
-    public $name;
-    public $phone;
-    public $email;
+    public string $number;
+    public string $name;
+    public string $phone;
+    public string $email;
+
+    public static array $requiredKeys = [
+        'number',
+        'name',
+        'phone',
+        'email',
+    ];
 
     public function __construct(string $number, string $name, string $phone, string $email)
     {
@@ -15,6 +24,18 @@ class Customer
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
+    }
+
+    public static function fromArray(array $data): Customer
+    {
+        self::validateArrayData($data);
+
+        return new static(
+            $data['number'],
+            $data['name'],
+            $data['phone'],
+            $data['email']
+        );
     }
 
     public function toArray(): array

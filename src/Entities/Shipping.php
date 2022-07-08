@@ -2,17 +2,23 @@
 
 namespace ItsFaqih\Faspay\Entities;
 
-class Shipping
+use ItsFaqih\Faspay\Contracts\Entity;
+
+class Shipping extends Entity
 {
-    public $name;
-    public $lastName;
-    public $address;
-    public $city;
-    public $region;
-    public $state;
-    public $postalCode;
-    public $countryCode;
-    public $phone;
+    public string $name;
+    public ?string $lastName;
+    public ?string $address;
+    public ?string $city;
+    public ?string $region;
+    public ?string $state;
+    public ?string $postalCode;
+    public ?string $countryCode;
+    public ?string $phone;
+
+    public static array $requiredKeys = [
+        'name',
+    ];
 
     public function __construct(
         string $name,
@@ -34,6 +40,23 @@ class Shipping
         $this->postalCode = $postalCode;
         $this->countryCode = $countryCode;
         $this->phone = $phone;
+    }
+
+    public static function fromArray(array $data): Shipping
+    {
+        self::validateArrayData($data);
+
+        return new static(
+            $data['name'],
+            $data['lastName'] ?? null,
+            $data['address'] ?? null,
+            $data['city'] ?? null,
+            $data['region'] ?? null,
+            $data['state'] ?? null,
+            $data['postalCode'] ?? null,
+            $data['countryCode'] ?? null,
+            $data['phone'] ?? null
+        );
     }
 
     public function toArray(): array
