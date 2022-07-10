@@ -9,9 +9,9 @@ use ItsFaqih\Faspay\Responses\InquiryPaymentStatusResponse;
 
 class InquiryPaymentStatusRequest extends Request
 {
-    private $request = 'Inquiry Status Payment';
-    private $trxId;
-    private $billNo;
+    private string $request = 'Inquiry Status Payment';
+    private string $trxId;
+    private string $billNo;
 
     public function __construct(User $user, Environment $environment, string $trxId, string $billNo)
     {

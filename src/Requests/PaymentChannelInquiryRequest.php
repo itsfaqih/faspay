@@ -7,7 +7,7 @@ use ItsFaqih\Faspay\Responses\PaymentChannelInquiryResponse;
 
 class PaymentChannelInquiryRequest extends Request
 {
-    private $request = 'Request List of Payment Gateway';
+    private string $request = 'Request List of Payment Gateway';
 
     public function handle(): PaymentChannelInquiryResponse
     {

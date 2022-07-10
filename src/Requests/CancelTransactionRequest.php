@@ -9,10 +9,10 @@ use ItsFaqih\Faspay\Responses\CancelTransactionResponse;
 
 class CancelTransactionRequest extends Request
 {
-    private $request = 'Inquiry Status Payment';
-    private $trxId;
-    private $billNo;
-    private $reason;
+    private string $request = 'Inquiry Status Payment';
+    private string $trxId;
+    private string $billNo;
+    private string $reason;
 
     public function __construct(User $user, Environment $environment, string $trxId, string $billNo, string $reason)
     {

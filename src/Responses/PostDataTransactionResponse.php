@@ -8,7 +8,7 @@ use ItsFaqih\Faspay\Enums\PaymentType;
 
 class PostDataTransactionResponse extends Response
 {
-    public string $message;
+    public string $response;
     public string $trxId;
     public string $merchantId;
     public string $merchant;
