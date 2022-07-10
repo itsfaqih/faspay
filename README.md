@@ -40,7 +40,7 @@ use ItsFaqih\Faspay\Enums\PaymentChannel;
 use ItsFaqih\Faspay\Enums\PaymentType;
 
 $bill = new Bill('TRX-123', new \DateTime(), (new \DateTime())->modify('+1 day'), 'Red Shoes with special price', '250000');
-$payment = new Payment(PaymentChannel::LINK_AJA(), PaymentType::FULL_SETTLEMENT());
+$payment = new Payment(PaymentChannel::LINKAJA(), PaymentType::FULL_SETTLEMENT());
 $customer = new Customer('001', 'John Smith', '08123456789', 'john.smith@example.com');
 $item = new BillItem('Red Shoes', 1, '250000');
 
