@@ -10,5 +10,7 @@ interface Request
 
     public function getConfig(): array;
 
+    public function getPayload(): array;
+
     public function handle(): ?Response;
 }

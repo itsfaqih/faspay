@@ -29,21 +29,26 @@ class PostDataTransactionRequest extends Request
         $this->items = $items;
     }
 
+    public function getPayload(): array
+    {
+        return array_merge(
+            [
+                'request' => $this->request,
+                'item' => array_map(fn (BillItem $item) => $item->toArray(), $this->items),
+                'terminal' => '10',
+                'signature' => $this->user->getSignature($this->bill->number),
+            ],
+            $this->user->getMerchantArray(),
+            $this->bill->toArray(),
+            $this->payment->toArray(),
+            $this->customer->toArray()
+        );
+    }
+
     public function handle(): PostDataTransactionResponse
     {
         $response = $this->httpClient->post('/cvr/300011/10', [
-            'json' => array_merge(
-                [
-                    'request' => $this->request,
-                    'item' => array_map(fn (BillItem $item) => $item->toArray(), $this->items),
-                    'terminal' => '10',
-                    'signature' => $this->user->getSignature($this->bill->number),
-                ],
-                $this->user->getMerchantArray(),
-                $this->bill->toArray(),
-                $this->payment->toArray(),
-                $this->customer->toArray()
-            ),
+            'json' => $this->getPayload(),
         ]);
 
         return new PostDataTransactionResponse($response->getBody()->getContents());

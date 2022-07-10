@@ -148,7 +148,7 @@ class Bill extends Entity
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'bill_no' => $this->number,
             'bill_reff' => $this->reference,
             'bill_date' => $this->date->format('Y-m-d H:i:s'),
@@ -158,6 +158,8 @@ class Bill extends Entity
             'bill_gross' => $this->gross,
             'bill_miscfee' => $this->miscFee,
             'bill_total' => $this->total,
-        ];
+        ], function ($value) {
+            return $value !== null;
+        });
     }
 }

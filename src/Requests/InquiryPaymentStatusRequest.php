@@ -21,16 +21,21 @@ class InquiryPaymentStatusRequest extends Request
         $this->billNo = $billNo;
     }
 
+    public function getPayload(): array
+    {
+        return array_merge([
+            'request' => $this->request,
+            'trx_id' => $this->trxId,
+            'bill_no' => $this->billNo,
+            'merchant_id' => $this->user->merchantId,
+            'signature' => $this->user->getSignature($this->billNo),
+        ]);
+    }
+
     public function handle(): InquiryPaymentStatusResponse
     {
         $response = $this->httpClient->post('/cvr/100004/10', [
-            'json' => array_merge([
-                'request' => $this->request,
-                'trx_id' => $this->trxId,
-                'bill_no' => $this->billNo,
-                'merchant_id' => $this->user->merchantId,
-                'signature' => $this->user->getSignature($this->billNo),
-            ]),
+            'json' => $this->getPayload(),
         ]);
 
         return new InquiryPaymentStatusResponse($response->getBody()->getContents());

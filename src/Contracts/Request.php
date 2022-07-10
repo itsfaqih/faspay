@@ -34,6 +34,11 @@ class Request implements RequestInterface
         return $this->httpConfig;
     }
 
+    public function getPayload(): array
+    {
+        return [];
+    }
+
     public function handle(): ?Response
     {
         return null;

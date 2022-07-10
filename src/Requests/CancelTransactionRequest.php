@@ -23,16 +23,21 @@ class CancelTransactionRequest extends Request
         $this->reason = $reason;
     }
 
+    public function getPayload(): array
+    {
+        return array_merge([
+            'request' => $this->request,
+            'trx_id' => $this->trxId,
+            'bill_no' => $this->billNo,
+            'payment_cancel' => $this->reason,
+            'signature' => $this->user->getSignature($this->billNo),
+        ], $this->user->getMerchantArray());
+    }
+
     public function handle(): CancelTransactionResponse
     {
         $response = $this->httpClient->post('/cvr/100005/10', [
-            'json' => array_merge([
-                'request' => $this->request,
-                'trx_id' => $this->trxId,
-                'bill_no' => $this->billNo,
-                'payment_cancel' => $this->reason,
-                'signature' => $this->user->getSignature($this->billNo),
-            ], $this->user->getMerchantArray()),
+            'json' => $this->getPayload(),
         ]);
 
         return new CancelTransactionResponse($response->getBody()->getContents());
