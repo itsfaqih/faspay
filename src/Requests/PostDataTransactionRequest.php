@@ -4,6 +4,7 @@ namespace ItsFaqih\Faspay\Requests;
 
 use ItsFaqih\Faspay\Contracts\Request;
 use ItsFaqih\Faspay\Entities\Bill;
+use ItsFaqih\Faspay\Entities\BillItem;
 use ItsFaqih\Faspay\Entities\Customer;
 use ItsFaqih\Faspay\Entities\Payment;
 use ItsFaqih\Faspay\Entities\User;
@@ -12,11 +13,11 @@ use ItsFaqih\Faspay\Responses\PostDataTransactionResponse;
 
 class PostDataTransactionRequest extends Request
 {
-    private $request = 'Post Data Transaction';
-    private $bill;
-    private $payment;
-    private $customer;
-    private $items;
+    private string $request = 'Post Data Transaction';
+    private Bill $bill;
+    private Payment $payment;
+    private Customer $customer;
+    private array $items;
 
     public function __construct(User $user, Environment $environment, Bill $bill, Payment $payment, Customer $customer, array $items)
     {
@@ -34,9 +35,9 @@ class PostDataTransactionRequest extends Request
             'json' => array_merge(
                 [
                     'request' => $this->request,
-                    'item' => $this->items,
+                    'item' => array_map(fn (BillItem $item) => $item->toArray(), $this->items),
                     'terminal' => '10',
-                    'signature' => $this->user->getSignature(),
+                    'signature' => $this->user->getSignature($this->bill->number),
                 ],
                 $this->user->getMerchantArray(),
                 $this->bill->toArray(),
